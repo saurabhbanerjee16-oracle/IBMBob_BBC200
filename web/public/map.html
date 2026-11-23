@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Public map - BBMP complaints</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <main class="wrap">
+    <h1>Public complaints map</h1>
+    <p class="lead">Submitted complaints and ward-wise counts. Pin positions are rounded to about 110 m. Reporter details are never shown.</p>
+    <div class="card">
+      <div class="row">
+        <div><label for="severity">Severity</label><select id="severity"><option value="">All</option><option>Low</option><option>Medium</option><option>High</option></select></div>
+        <div><label for="status">Status</label><select id="status"><option value="">All</option><option value="submitted">Submitted</option><option value="acknowledged">Acknowledged</option><option value="in_progress">In progress</option><option value="resolved">Resolved</option><option value="rejected">Rejected</option></select></div>
+      </div>
+    </div>
+    <div id="map" class="map tall" role="application" aria-label="Map of complaints"></div>
+    <div id="summary" class="card" aria-live="polite"></div>
+  </main>
+  <script type="module" src="/map.js"></script>
+</body>
+</html>

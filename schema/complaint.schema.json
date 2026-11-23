@@ -1,0 +1,117 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "complaint.schema.json",
+  "title": "BBMP Pothole Complaint",
+  "type": "object",
+  "required": [
+    "tracking_id",
+    "reporter",
+    "location",
+    "photos",
+    "issue_type",
+    "severity",
+    "text",
+    "needs_human_review",
+    "status",
+    "status_history",
+    "created_at",
+    "escalation"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "tracking_id": {
+      "type": "string",
+      "pattern": "^BBMP-[0-9A-HJKMNP-TV-Z]{10}$",
+      "description": "Random, unguessable ID: 'BBMP-' plus 10 Crockford base32 characters (50 bits of randomness)."
+    },
+    "reporter": {
+      "type": "object",
+      "required": ["channel", "contact"],
+      "additionalProperties": false,
+      "properties": {
+        "channel": { "type": "string", "enum": ["whatsapp", "web"] },
+        "contact": { "type": ["string", "null"], "description": "WhatsApp number, or optional email/phone for web users. Never shown publicly." },
+        "name": { "type": ["string", "null"], "description": "Never shown publicly." }
+      }
+    },
+    "location": {
+      "type": "object",
+      "required": ["lat", "lng", "address", "ward", "zone"],
+      "additionalProperties": false,
+      "properties": {
+        "lat": { "type": "number", "minimum": -90, "maximum": 90 },
+        "lng": { "type": "number", "minimum": -180, "maximum": 180 },
+        "address": { "type": ["string", "null"] },
+        "ward": { "type": ["string", "null"], "description": "Null when unresolved and not yet confirmed by the user." },
+        "zone": { "type": ["string", "null"], "description": "Null when unresolved and not yet confirmed by the user." }
+      }
+    },
+    "photos": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 10,
+      "items": {
+        "type": "string",
+        "pattern": "^[0-9a-f]{32}\\.jpg$",
+        "description": "Random file name of a stored photo under complaints/photos/. EXIF metadata is stripped at upload."
+      }
+    },
+    "issue_type": {
+      "type": "string",
+      "description": "Starting set is an open item in the plan.",
+      "enum": ["pothole", "other_road_damage", "not_a_road_issue"]
+    },
+    "severity": {
+      "type": "string",
+      "enum": ["Low", "Medium", "High"]
+    },
+    "text": {
+      "type": "object",
+      "required": ["en", "kn"],
+      "additionalProperties": false,
+      "properties": {
+        "en": { "type": "string", "minLength": 1 },
+        "kn": { "type": "string", "minLength": 1, "description": "LLM-generated Kannada; unverified." }
+      }
+    },
+    "needs_human_review": {
+      "type": "boolean",
+      "description": "Always true for LLM-generated Kannada text."
+    },
+    "status": {
+      "type": "string",
+      "description": "drafted and submitted are set by the pipeline; the rest are set by officers.",
+      "enum": ["drafted", "submitted", "acknowledged", "in_progress", "resolved", "rejected"]
+    },
+    "status_history": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["status", "at", "note"],
+        "additionalProperties": false,
+        "properties": {
+          "status": { "type": "string", "enum": ["drafted", "submitted", "acknowledged", "in_progress", "resolved", "rejected"] },
+          "at": { "type": "string", "format": "date-time" },
+          "note": { "type": ["string", "null"], "maxLength": 500 }
+        }
+      }
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "escalation": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["level", "days", "due"],
+        "additionalProperties": false,
+        "properties": {
+          "level": { "type": "string", "enum": ["ward_engineer", "zone", "commissioner"] },
+          "days": { "type": ["integer", "null"], "minimum": 0, "description": "Null means not configured." },
+          "due": { "type": ["string", "null"], "format": "date-time", "description": "Null when days is null." }
+        }
+      }
+    }
+  }
+}

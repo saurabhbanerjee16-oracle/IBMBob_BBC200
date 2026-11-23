@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.env
+complaints/*
+!complaints/.gitkeep
+outbox/
+uploads/

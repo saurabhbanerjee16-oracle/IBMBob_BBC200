@@ -1,0 +1,10 @@
+{
+  "_note": "Placeholders only. Fill in verified BBMP addresses; do not invent them. Keys are ward/zone names as they appear in data/bbmp-wards.geojson.",
+  "default": { "email": null },
+  "zones": {
+    "EXAMPLE_ZONE": { "email": null }
+  },
+  "wards": {
+    "EXAMPLE_WARD": { "zone": "EXAMPLE_ZONE", "email": null }
+  }
+}

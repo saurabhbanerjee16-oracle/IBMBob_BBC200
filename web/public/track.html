@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Track a complaint - BBMP complaints</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <main class="wrap">
+    <h1>Track a complaint</h1>
+    <p class="lead">Enter the tracking ID you received when you submitted the complaint.</p>
+    <form id="form" class="card" novalidate>
+      <label for="id">Tracking ID</label>
+      <div class="row">
+        <input type="text" id="id" placeholder="BBMP-XXXXXXXXXX" autocomplete="off" spellcheck="false" maxlength="32">
+        <button type="submit" style="flex:0 0 auto">Look up</button>
+      </div>
+    </form>
+    <div id="result" aria-live="polite"></div>
+  </main>
+  <script type="module" src="/track.js"></script>
+</body>
+</html>

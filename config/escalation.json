@@ -1,0 +1,8 @@
+{
+  "_note": "days is null until the user supplies the value. Do not guess SLA values.",
+  "levels": [
+    { "level": "ward_engineer", "days": null },
+    { "level": "zone", "days": null },
+    { "level": "commissioner", "days": null }
+  ]
+}
